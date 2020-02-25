@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# 2bwm-session
+#
+# this script will launch 2bwm with other programs
+#
+
+xrdb -load ~/.Xresources
+xrandr --rate 144.0 &
+picom --vsync &
+feh --bg-scale ~/Pictures/leaf.jpg &
+polybar base &
+2bwm &
+exec st

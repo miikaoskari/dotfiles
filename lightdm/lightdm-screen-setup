@@ -1,0 +1,2 @@
+#!/bin/sh
+xrandr --rate 144.0 &
