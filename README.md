@@ -1,2 +1,2 @@
 # my dotfiles
-my personal config files for: termite 2bwm polybar i3
+my personal config files for: 2bwm, polybar, zsh & urxvt

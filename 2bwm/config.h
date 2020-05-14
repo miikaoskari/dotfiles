@@ -41,8 +41,12 @@ static const uint8_t borders[] = {3,5,5,4};
 static const char *ignore_names[] = {"bar", "xclock"};
 ///--Menus and Programs---///
 static const char *menucmd[]   = { "", NULL };
-static const char *terminal[]  = { "termite" , NULL };
-static const char *mpdmenu[]   = { "dmenu_run" , NULL };
+static const char *launchst[]  = { "urxvt" , NULL };
+static const char *mpdmenu[]   = { "dmenu_run" , "-sb" , "#4b7d7e" , NULL };
+static const char *playerctl[] = { "playerctl" , "play-pause" , NULL };
+static const char *chromium[]  = { "chromium" , NULL};
+static const char *firefox[]   = { "firefox" , NULL};
+static const char *areascrot[] = { "~/.config/2bwm/areascrot.sh", NULL};
 
 ///--Custom foo---///
 static void halfandcentered(const Arg *arg)
@@ -51,6 +55,21 @@ static void halfandcentered(const Arg *arg)
 	maxhalf(&arg2);
 	Arg arg3 = {.i=TWOBWM_TELEPORT_CENTER};
 	teleport(&arg3);
+}
+///---Sloppy focus behavior---///
+/*
+ * Command to execute when switching from sloppy focus to click to focus
+ * The strings "Sloppy" and "Click" will be passed as the last argument
+ * If NULL this is ignored
+ */
+static const char *sloppy_switch_cmd[] = {};
+//static const char *sloppy_switch_cmd[] = { "notify-send", "toggle sloppy", NULL };
+static void toggle_sloppy(const Arg *arg)
+{
+	is_sloppy = !is_sloppy;
+	if (arg->com != NULL && LENGTH(arg->com) > 0) {
+		start(arg);
+	}
 }
 ///---Shortcuts---///
 /* Check /usr/include/X11/keysymdef.h for the list of all keys
@@ -181,13 +200,17 @@ static key keys[] = {
     {  MOD |SHIFT,        XK_Right,      cursor_move,       {.i=TWOBWM_CURSOR_RIGHT}},
     {  MOD |SHIFT,        XK_Left,       cursor_move,       {.i=TWOBWM_CURSOR_LEFT}},
     // Start programs
-    {  MOD ,              XK_w,          start,             {.com = menucmd}},
     {  MOD ,              XK_d,          start,             {.com = mpdmenu}},
-    {  MOD ,              XK_w,          start,             {.com = terminal}},
+    {  MOD ,              XK_Return,     start,             {.com = launchst}},
+    {  MOD ,              XK_p,          start,             {.com = playerctl}},
+    {  MOD |CONTROL,      XK_c,          start,             {.com = chromium}},
+    {  MOD |CONTROL,      XK_f,          start,             {.com = firefox}},
+    {  MOD ,              XK_o,          start,             {.com = areascrot}},
     // Exit or restart 2bwm
     {  MOD |CONTROL,      XK_q,          twobwm_exit,       {.i=0}},
     {  MOD |CONTROL,      XK_r,          twobwm_restart,    {.i=0}},
     {  MOD ,              XK_space,      halfandcentered,   {.i=0}},
+    {  MOD ,              XK_s,          toggle_sloppy,     {.com = sloppy_switch_cmd}},
     // Change current workspace
        DESKTOPCHANGE(     XK_1,                             0)
        DESKTOPCHANGE(     XK_2,                             1)
