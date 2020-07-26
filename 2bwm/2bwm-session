@@ -10,5 +10,5 @@ xrdb -load ~/.Xresources
 xrandr --rate 144.0 &
 picom --vsync &
 ~/.fehbg &
-polybar base &
+polybar top &
 exec 2bwm

@@ -1,12 +1,10 @@
 ! xresource file :D
 
 !2bwm stuff
-!twobwm.border_width: 10
-!twobwm.outer_border: 7
-twobwm.border_width: 0
-twobwm.outer_border: 0
-twobwm.focus_color: #78C0B3
-twobwm.fixed_color: #78C0B3
+twobwm.border_width: 10
+twobwm.outer_border: 7
+twobwm.focus_color: #A66B9F
+twobwm.fixed_color: #A66B9F
 twobwm.inverted_colors: false
 twobwm.enable_compton: false
 
@@ -70,6 +68,8 @@ twobwm.enable_compton: false
 */
 
 ! URxvt config
+!
+
 
 URxvt.font: xft:FiraMono:size=11:antialias=true
 URxvt.boldFont: xft:FiraMono:style=bold:size=11:antialias=true
@@ -97,3 +97,9 @@ Xft.rgba: rgb
 Xft.autohint: false
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
+
+!! sxiv
+
+Sxiv*background: #454545
+Sxiv*foreground: #ffffff
+Sxiv*font: Cozette:size=11

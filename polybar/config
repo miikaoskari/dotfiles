@@ -3,7 +3,7 @@
 [colors]
 background = #1c2023
 background-alt = #444
-foreground = #dfdfdf
+foreground = #A66B9F
 foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
@@ -65,27 +65,62 @@ module-margin-left = 0
 module-margin-right =0
 
 [bar/top]
-width = 8%
+width = 60%
 height = 30
-offset-x = 46%
-offset-y = 1
-radius = 5
+offset-x = 20%
+offset-y = 3
+radius = 0
 background = #282c34
-font-0 = hack:size=10:antialias=true
-modules-left = 
-modules-center = desktop sep date
-modules-right = 
+font-0 = Cozette
+font-1 = Siji
+modules-left = desktop sep spotify spotify-play-pause spotify-next sep
+modules-center = xwindow
+modules-right = menu-apps sep date
 spacing = 1
-padding-left = 0
-padding-right = 0
+padding-left = 3
+padding-right = 3
+
+[bar/bottom]
+width 100%
+height 35
+bottom = true
+background = #2E3440
+font-0 = Cozette
+font-1 = Siji
+modules-left = ewmh sep spotify spotify-play-pause spotify-next sep
+modules-center = xwindow
+modules-right = sep date
+spacing = 1
+padding-left = 3
+padding-right = 3
 
 ;----------------modules----------------
+
+[module/spotify]
+type = custom/script
+tail = true
+exec = ~/scripts/get_spotify_status.sh
+format = <label>
+format-padding = 1
+
+[module/spotify-play-pause]
+type = custom/script
+exec = echo " "
+format-padding = -1
+initial = 1
+click-left = playerctl play-pause spotify
+
+[module/spotify-next]
+type = custom/script
+exec = echo " "
+format = <label>
+click-left = playerctl next spotify
 
 [module/sep]
 type = custom/script
 label = " | "
 exec = echo label
-format-foreground = #8dc26f
+format-foreground = ${colors.foreground}
 
 [module/awclock]
 type = custom/script
@@ -96,27 +131,22 @@ exec = echo label
 type = internal/xwindow
 label = %title:0:30:...%
 
-[module/eth]
-type = internal/network
-interface = enp31s0
-interval = 3.0
-;format-connected-underline = #55aa55
-format-connected-prefix = " "
-;format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
-
 [module/desktop]
 type = custom/script
-interval = 0.01
+interval = 0.5
 exec = echo $(($(xprop -root _NET_CURRENT_DESKTOP | sed -e 's/_NET_CURRENT_DESKTOP(CARDINAL) = //')+1))
 format-padding = 1
 ;format-foreground = ${colors.foreground}
 ;format-background = ${colors.background}
+
+[module/ewmh]
+type = internal/xworkspaces
+label-monitor = %name%
+
+icon-0 = ;1
+icon-1 = ;2
+icon-2 = ;3
+icon-3 = ;4
 
 [module/window]
 type = internal/xwindow
@@ -146,52 +176,38 @@ format-prefix-foreground = ${colors.foreground-alt}
 ;format-underline = #0a6cf5
 label = %date% %time%
 
-[module/pulseaudio]
-type = internal/pulseaudio
-format-volume = <label-volume> <bar-volume>
-label-volume = vol %percentage%%
-label-volume-foreground = ${root.foreground}
-label-muted = muted
-label-muted-foreground = #666
-bar-volume-width = 8
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #63FFA2
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
-
-[module/powermenu]
+[module/menu-apps]
 type = custom/menu
-expand-right = true
+expand-right = false
 format-spacing = 1
-label-open = power
-label-open-foreground = ${colors.secondary}
-label-close = cancel
-label-close-foreground = ${colors.secondary}
 label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
-menu-0-0 = reboot
+label-separator-foreground = ${colors.foreground}
+
+label-open = ""
+label-close = ""
+menu-0-0 = browser
 menu-0-0-exec = menu-open-1
-menu-0-1 = power off
+menu-0-1 = media
 menu-0-1-exec = menu-open-2
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo systemctl reboot
-menu-2-0 = power off
-menu-2-0-exec = sudo systemctl poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
+menu-0-2 = power
+menu-0-2-exec = menu-open-3
+
+menu-1-0 = firefox
+menu-1-0-exec = firefox &
+menu-1-1 = chromium
+menu-1-1-exec = chromium &
+
+menu-2-0 = discord
+menu-2-0-exec = discord &
+menu-2-1 = spotify
+menu-2-1-exec = spotify &
+menu-2-2 = screenshot
+menu-2-2-exec = maim -s | xclip -selection clipboard -t image/png &
+
+menu-3-0 = shutdown
+menu-3-0-exec = shutdown 0
+menu-3-1 = reboot
+menu-3-1-exec = reboot
 
 [settings]
 screenchange-reload = true
