@@ -1,2 +1,14 @@
-# my dotfiles
-my personal config files for: 2bwm, polybar, zsh & urxvt
+# dotfiles
+
+personal dotfiles
+
+## snippets
+
+snippets in textmate style
+
+compatible with vscode
+
+## shell
+
+includes some useful fish functions
+
