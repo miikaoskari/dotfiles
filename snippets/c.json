@@ -1,0 +1,16 @@
+{
+	"guard": {
+	"prefix": "guard",
+	"body": [
+		"#ifndef ${1:${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H}",
+		"#define ${1:${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H}",
+		"",
+		"$0",
+		"",
+		"#endif // ${1}",
+		""
+	],
+	"description": "C header guard",
+	"isFileTemplate": true
+	}
+}
