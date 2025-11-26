@@ -11,4 +11,3 @@ compatible with vscode
 ## shell
 
 includes some useful fish functions
-
