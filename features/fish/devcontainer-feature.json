@@ -1,0 +1,17 @@
+{
+  "name": "fish",
+  "id": "fish",
+  "version": "0.0.1",
+  "description": "Installs fish",
+  "documentationURL": "https://github.com/miikaoskari/dotfiles/features/fish",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "fish"
+      }
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils"
+  ]
+}
