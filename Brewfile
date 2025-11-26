@@ -1,4 +1,5 @@
-brew "fzf"
-brew "fish"
-brew "ripgrep"
 brew "fd"
+brew "fish"
+brew "fzf"
+brew "git-absorb"
+brew "ripgrep"
