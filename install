@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -euxo pipefail
 
 NONINTERACTIVE=1 scripts/brew
@@ -7,5 +7,5 @@ brew bundle
 
 # fish stuff
 chsh -s /home/linuxbrew/.linuxbrew/bin/fish
-ln -s "$(pwd)/fish/functions" "$HOME/.config/fish/functions
+ln -sfn "$(pwd)/fish/functions" "$HOME/.config/fish/functions
 fish -c 'fzf --fish | source'
