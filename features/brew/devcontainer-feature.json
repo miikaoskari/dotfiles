@@ -1,7 +1,7 @@
 {
   "name": "brew",
   "id": "brew",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Installs brew",
   "documentationURL": "https://github.com/miikaoskari/dotfiles/features/brew",
   "installsAfter": [
