@@ -1,5 +1,6 @@
 brew "fd"
 brew "fish"
 brew "fzf"
+brew "gitui"
 brew "git-absorb"
 brew "ripgrep"
