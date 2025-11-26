@@ -1,0 +1,23 @@
+name: "release features"
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: |
+          cp scripts/brew features/brew/
+
+      - name: "Publish Features"
+        uses: devcontainers/action@528049dce833673f136ddfc09c2720d450029a6b
+        with:
+          publish-features: "true"
+          base-path-to-features: "./features"
+          
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
