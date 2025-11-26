@@ -1,0 +1,7 @@
+{
+	"pipefail": {
+		"prefix": "pipefail",
+		"body": "set -euxo pipefail",
+		"description": "set -e, -u, -x, -o pipefail"
+	}
+}
