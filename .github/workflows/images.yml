@@ -9,9 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: |
-          cp scripts/brew features/brew/
-
       - name: "Publish Features"
         uses: devcontainers/action@528049dce833673f136ddfc09c2720d450029a6b
         with:
