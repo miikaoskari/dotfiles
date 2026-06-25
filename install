@@ -1,11 +1,99 @@
-#!/bin/bash
-set -euxo pipefail
+#!/bin/sh
+set -e
 
-NONINTERACTIVE=1 scripts/brew
+# dotfiles repository root (absolute path)
+DOTFILES_DIR=$(cd "$(dirname "$0" 2>/dev/null || echo ".")" && pwd)
 
-brew bundle
+BOOTSTRAP=0
 
-# fish stuff
-chsh -s /home/linuxbrew/.linuxbrew/bin/fish
-ln -sfn "$(pwd)/fish/functions" "$HOME/.config/fish/functions
-fish -c 'fzf --fish | source'
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -b|--bootstrap)
+            BOOTSTRAP=1
+            shift
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
+
+# helper to safely create symlink with backups
+link_file() {
+    src="$1"
+    dst="$2"
+
+    dst_dir=$(dirname "$dst")
+
+    if [ ! -d "$dst_dir" ]; then
+        mkdir -p "$dst_dir"
+    fi
+
+    if [ -e "$dst" ] || [ -L "$dst" ]; then
+        if [ -L "$dst" ]; then
+            target=""
+            if command -v readlink >/dev/null 2>&1; then
+                target=$(readlink "$dst")
+            else
+                target=$(ls -l "$dst" | sed 's/.* -> //')
+            fi
+            
+            if [ "$target" = "$src" ]; then
+                echo "already linked: $dst"
+                return 0
+            fi
+        fi
+
+        backup_suffix=$(date +%Y%m%d_%H%M%S)
+        backup="${dst}.${backup_suffix}.bak"
+        mv "$dst" "$backup"
+        echo "backed up existing $dst to $(basename "$backup")"
+    fi
+
+    ln -s "$src" "$dst"
+    echo "linked: $dst -> $src"
+}
+
+link_vscode_config() {
+    target_dir="$1"
+    
+    if [ -f "$DOTFILES_DIR/vscode/keybindings.json" ]; then
+        link_file "$DOTFILES_DIR/vscode/keybindings.json" "$target_dir/keybindings.json"
+    fi
+    
+    if [ -d "$DOTFILES_DIR/snippets" ]; then
+        for s in "$DOTFILES_DIR"/snippets/*.json; do
+            if [ -f "$s" ]; then
+                name=$(basename "$s")
+                link_file "$s" "$target_dir/snippets/$name"
+            fi
+        done
+    fi
+}
+
+if [ -d "$DOTFILES_DIR/fish" ]; then
+    link_file "$DOTFILES_DIR/fish" "$HOME/.config/fish"
+fi
+
+# link vscode config
+OS="$(uname -s)"
+case "$OS" in
+    Darwin)
+        link_vscode_config "$HOME/Library/Application Support/Code/User"
+        ;;
+    Linux*)
+        link_vscode_config "$HOME/.config/Code/User"
+        ;;
+    *)
+        link_vscode_config "$HOME/.config/Code/User"
+        ;;
+esac
+
+# brew bundle install (only bootstrap)
+if [ -f "$DOTFILES_DIR/Brewfile" ] && [ "$BOOTSTRAP" -eq 1 ]; then
+    if command -v brew >/dev/null 2>&1; then
+        brew bundle --file="$DOTFILES_DIR/Brewfile" >/dev/null 2>&1 || true
+    fi
+fi
+
+echo "done"
