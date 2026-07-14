@@ -6,6 +6,7 @@ zoxide init fish | source
 fzf --fish | source
 
 alias vim='nvim'
+alias cd='z'
 
 # Added by OrbStack: command-line tools and integration
 # This won't be added again if you remove it.
