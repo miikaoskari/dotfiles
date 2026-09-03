@@ -1,0 +1,41 @@
+# cforge — Ghostty theme
+# Same palette as the cforge Neovim colorscheme, tuned for C/C++.
+#
+# ANSI mapping mirrors the editor's semantics so a terminal running gdb,
+# make, git, etc. next to Neovim feels like one coherent palette:
+#   red     -> operators/pointers/errors
+#   yellow  -> types
+#   orange  -> (not an ANSI slot, but used for cursor: storage-class/qualifiers)
+#   blue    -> control flow
+#   magenta -> preprocessor/macros
+#   cyan    -> functions
+#   green   -> strings/success
+
+background            = 1a1c1e
+foreground             = d4d7de
+
+cursor-color           = d19a66
+cursor-text            = 1a1c1e
+
+selection-background   = 33393f
+selection-foreground   = d4d7de
+
+# Normal colors (0-7)
+palette = 0=#212429
+palette = 1=#e06c75
+palette = 2=#98c379
+palette = 3=#e5c07b
+palette = 4=#61afef
+palette = 5=#c678dd
+palette = 6=#56b6c2
+palette = 7=#d4d7de
+
+# Bright colors (8-15)
+palette = 8=#5c6370
+palette = 9=#f0838d
+palette = 10=#b5e08c
+palette = 11=#f0d9a0
+palette = 12=#7cc2ff
+palette = 13=#d7a3e8
+palette = 14=#7ecbd6
+palette = 15=#eef0f4
