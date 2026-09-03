@@ -5,4 +5,26 @@ brew "gitui"
 brew "git-absorb"
 brew "ripgrep"
 brew "zoxide"
+brew "mdcat"
+brew "nvim"
+brew "sequoia-sq"
+brew "shellcheck"
+brew "magic-wormhole"
+brew "bat"
+brew "binwalk"
+brew "btop"
+brew "hashcat"
+brew "yara-x"
+brew "uv"
+brew "rustup"
+
+uv "pwntools"
+
+cargo "mkcdoc", source: "https://github.com/miikaoskari/mkcdoc"
+cargo "gratz", source: "https://github.com/miikaoskari/gratz"
+
+tap "pwndbg/tap"
+brew "pwndbg/tap/pwndbg-gdb"
+
 cask "zed"
+
